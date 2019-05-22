@@ -28,7 +28,7 @@ readonly api_protocol="https"
 readonly auth_token_file=${script_name}".token"
 
 # api auth token (get your own here --> https://darksky.net/dev/register)
-readonly auth_token=`cat ${auth_token_file}`
+readonly auth_token=`cat ~/bin/${auth_token_file}`
 
 # api uri
 readonly api_uri=${api_protocol}"://"${api_host}"/forecast/"${auth_token}"/"${coordinates}
@@ -143,6 +143,9 @@ unset dependancy
 
 # make sure we're using least bash 4 for proper support of associative arrays
 [ $( echo ${BASH_VERSION} | grep -o '^[0-9]' ) -ge 4 ] || __throw_error "Please upgrade to at least bash version 4" ${?}
+
+# make sure we have an api token
+[ -s ${auth_token} ] && __throw_error "Token file not found" ${?}
 
 # make sure we can reach the api
 __validate_api_connectivity ${api_host} ${api_protocol} || __throw_error "Unable to establish tcp connection to "${api_host} ${?}
