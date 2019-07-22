@@ -15,23 +15,35 @@ IFS=$'\n\t'
 # script name
 readonly script_name=${0##*/}
 
-# geographic coordinates
-readonly coordinates="41.85003,-87.65005"
-
-# api host
-readonly api_host="api.darksky.net"
+# ipinfo api host
+readonly ip_api_host="ipinfo.io"
 
 # api protocol
-readonly api_protocol="https"
+readonly ip_api_protocol="https"
 
 # api auth token file
-readonly auth_token_file=${script_name}".token"
+readonly ip_auth_token_file=${script_name}"_ip.token"
 
-# api auth token (get your own here --> https://darksky.net/dev/register)
-readonly auth_token=`cat ~/bin/${auth_token_file}`
+# ipinfo api auth token (get your own here --> https://ipinfo.io/developers)
+readonly ip_auth_token=`cat ~/bin/${ip_auth_token_file}`
 
 # api uri
-readonly api_uri=${api_protocol}"://"${api_host}"/forecast/"${auth_token}"/"${coordinates}
+readonly ip_api_uri=${ip_api_protocol}"://"${ip_api_host}
+
+# Dark Sky api host
+readonly ds_api_host="api.darksky.net"
+
+# api protocol
+readonly ds_api_protocol="https"
+
+# api auth token file
+readonly ds_auth_token_file=${script_name}"_ds.token"
+
+# Dark Sky api auth token (get your own here --> https://darksky.net/dev/register)
+readonly ds_auth_token=`cat ~/bin/${ds_auth_token_file}`
+
+# api uri
+readonly ds_api_uri=${ds_api_protocol}"://"${ds_api_host}"/forecast/"${ds_auth_token}
 
 # tool name
 readonly tool_name="Weather"
@@ -83,10 +95,26 @@ function __validate_api_connectivity() {
     
 }
 
+function __get_location() {
+    # query location api for gps coordinates
+    local coordinates=$( curl -sH "Authorization: Bearer "${ip_auth_token} ${ip_api_uri}/loc )
+
+    echo ${coordinates}
+
+}
+
+function __get_city() {
+    # query location api for gps coordinates
+    local city=$( curl -sH "Authorization: Bearer "${ip_auth_token} ${ip_api_uri}/city )
+
+    echo ${city}
+
+}
+
 
 function __get_summary() {
     # query api for current summary
-    local current_summary=$( curl -s "${api_uri}" | jq -r '.currently.summary' )
+    local current_summary=$( curl -s "${ds_api_uri}/${coordinates}" | jq -r '.currently.summary' )
 
     echo ${current_summary}
 
@@ -95,7 +123,7 @@ function __get_summary() {
 
 function __get_temperature() {
     # query api for current temperature
-    local current_temperature=$( curl -s "${api_uri}" | jq -r '.currently.temperature' | awk '{print int($1+0.5)}' )
+    local current_temperature=$( curl -s "${ds_api_uri}/${coordinates}" | jq -r '.currently.temperature' | awk '{print int($1+0.5)}' )
 
     echo ${current_temperature}
 
@@ -144,11 +172,19 @@ unset dependancy
 # make sure we're using least bash 4 for proper support of associative arrays
 [ $( echo ${BASH_VERSION} | grep -o '^[0-9]' ) -ge 4 ] || __throw_error "Please upgrade to at least bash version 4" ${?}
 
-# make sure we have an api token
-[ -s ${auth_token} ] && __throw_error "Token file not found" ${?}
+# make sure we have both api tokens
+[ -s ${ds_auth_token} ] && __throw_error "Dark Sky token file not found" ${?}
+[ -s ${ip_auth_token} ] && __throw_error "Ipinfo token file not found" ${?}
 
-# make sure we can reach the api
-__validate_api_connectivity ${api_host} ${api_protocol} || __throw_error "Unable to establish tcp connection to "${api_host} ${?}
+# make sure we can reach both apis
+__validate_api_connectivity ${ds_api_host} ${ds_api_protocol} || __throw_error "Unable to establish tcp connection to "${ds_api_host} ${?}
+__validate_api_connectivity ${ip_api_host} ${ip_api_protocol} || __throw_error "Unable to establish tcp connection to "${ip_api_host} ${?}
+
+# get current geolocation coordinates
+coordinates=$( __get_location ) || __throw_error "Unable to get geolocation" ${?}
+
+# get current geolocation coordinates
+city=$( __get_city ) || __throw_error "Unable to get city" ${?}
 
 # get the current temperature
 current_temperature=$( __get_temperature ) || __throw_error "Unable to get temperature" ${?}
@@ -156,4 +192,4 @@ current_temperature=$( __get_temperature ) || __throw_error "Unable to get tempe
 # get the current temperature
 current_summary=$( __get_summary ) || __throw_error "Unable to get summary" ${?}
 
-echo ${current_temperature}"° "${current_summary}
+echo ${city}": "${current_temperature}"° "${current_summary}
