@@ -3,15 +3,15 @@
 ## Prerequisites
 
 1. Go to https://ipinfo.io/developers
-*   a. Sign up for a free developer account
-*   b. Create a file named dark-lie_ip.token and put your key in it
+*   Sign up for a free developer account
+*   Create a file named dark-lie_ip.token and put your key in it
       ```bash
       echo "<your key here>" > ~/bin/dark-lie_ip.token
       ```
 
 2. Go to https://darksky.net/dev/register
-*    a. Sign up for a free developer account
-*    b. Create a file named dark-lie_ds.token and put your key in it
+*    Sign up for a free developer account
+*    Create a file named dark-lie_ds.token and put your key in it
        ```bash
         echo "<your key here>" > ~/bin/dark-lie_ds.token
        ```

@@ -15,5 +15,13 @@ jobs:
       - checkout
 
       - run:
+          name: Prerequisites
+          command: touch ~/bin/dark-lie_ip.token && touch ~/bin/dark-lie_ds.token
+
+      - run:
+          name: Display Bash version
+          command: bash --version
+
+      - run:
           name: Run dark-lie
           command: bash dark-lie

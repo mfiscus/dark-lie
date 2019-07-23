@@ -49,7 +49,7 @@ readonly ds_api_uri=${ds_api_protocol}"://"${ds_api_host}"/forecast/"${ds_auth_t
 readonly tool_name="Weather"
 
 # get logname
-readonly logname=$( logname )
+readonly logname=$( whoami )
 
 
 # function to catch error messages
