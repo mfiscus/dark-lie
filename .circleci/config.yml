@@ -10,17 +10,17 @@ jobs:
 
       - run:
           name: Installing dependencies
-          command: apt update && apt upgrade && apt install -y jq git openssh-client
+          command: apt update && apt upgrade && apt install -y jq git openssh-client syslog-ng
 
       - checkout
 
       - run:
           name: Prerequisites
-          command: touch ~/bin/dark-lie_ip.token && touch ~/bin/dark-lie_ds.token
+          command: touch dark-lie_ip.token && touch dark-lie_ds.token
 
       - run:
-          name: Display Bash version
-          command: bash --version
+          name: Start syslog-ng
+          command: service syslog-ng start
 
       - run:
           name: Run dark-lie
