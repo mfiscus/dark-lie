@@ -112,6 +112,15 @@ function __get_city() {
 }
 
 
+function __get_region {
+    # query location api for gps coordinates
+    local region=$( curl -sH "Authorization: Bearer "${ip_auth_token} ${ip_api_uri}/region )
+
+    echo ${region}
+
+}
+
+
 function __get_summary() {
     # query api for current summary
     local current_summary=$( curl -s "${ds_api_uri}/${coordinates}" | jq -r '.currently.summary' )
@@ -183,8 +192,11 @@ __validate_api_connectivity ${ip_api_host} ${ip_api_protocol} || __throw_error "
 # get current geolocation coordinates
 coordinates=$( __get_location ) || __throw_error "Unable to get geolocation" ${?}
 
-# get current geolocation coordinates
+# get current city
 city=$( __get_city ) || __throw_error "Unable to get city" ${?}
+
+# get current region
+region=$( __get_region ) || __throw_error "Unable to get region" ${?}
 
 # get the current temperature
 current_temperature=$( __get_temperature ) || __throw_error "Unable to get temperature" ${?}
@@ -192,4 +204,4 @@ current_temperature=$( __get_temperature ) || __throw_error "Unable to get tempe
 # get the current temperature
 current_summary=$( __get_summary ) || __throw_error "Unable to get summary" ${?}
 
-echo ${city}": "${current_temperature}"° "${current_summary}
+echo "It is currently "${current_temperature}"° and "${current_summary}" in "${city}", "${region}
