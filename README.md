@@ -1,6 +1,6 @@
 # dark-lie
 
-## Prerequisits
+## Prerequisites
 
 1. Go to https://ipinfo.io/developers
    a. Sign up for a free developer account
