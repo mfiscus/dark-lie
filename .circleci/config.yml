@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/bin
+    
+    docker:
+      - image: debian:buster
+
+    steps:
+      - checkout
+
+      - run:
+          name: Installing dependencies
+          command: sudo apt install -y jq logger 
+
+      - run:
+          name: Run dark-lie
+          command: bash dark-lie
