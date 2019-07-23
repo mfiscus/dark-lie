@@ -7,11 +7,11 @@ jobs:
       - image: debian:buster
 
     steps:
-      - checkout
-
       - run:
           name: Install dependencies
           command: apt update && apt upgrade && apt install -y jq git openssh-client syslog-ng wget curl
+
+      - checkout
 
       - run:
           name: Start syslog-ng
