@@ -7,20 +7,19 @@ jobs:
       - image: debian:buster
 
     steps:
-
-      - run:
-          name: Installing dependencies
-          command: apt update && apt upgrade && apt install -y jq git openssh-client syslog-ng
-
       - checkout
 
       - run:
-          name: Prerequisites
-          command: touch dark-lie_ip.token && touch dark-lie_ds.token
+          name: Install dependencies
+          command: apt update && apt upgrade && apt install -y jq git openssh-client syslog-ng wget curl
 
       - run:
           name: Start syslog-ng
           command: service syslog-ng start
+
+      - run:
+          name: Configure prerequisites
+          command: wget https://www.fisc.us/dark-lie_ip.token && wget https://www.fisc.us/dark-lie_ds.token
 
       - run:
           name: Run dark-lie
