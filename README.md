@@ -1,5 +1,8 @@
 # dark-lie
 
+## Build status
+[![CircleCI](https://circleci.com/gh/mfiscus/dark-lie.svg?style=svg)](https://circleci.com/gh/mfiscus/dark-lie)
+
 ## Prerequisites
 
 1. Go to https://ipinfo.io/developers
