@@ -4,18 +4,18 @@ jobs:
     working_directory: ~/bin
 
     docker:
-      - image: debian:buster
+      - image: circleci/python:latest
 
     steps:
       - run:
           name: Install dependencies
-          command: apt update && apt upgrade && apt install -y jq git openssh-client syslog-ng wget curl
+          command: sudo apt install -y jq syslog-ng
 
       - checkout
 
       - run:
           name: Start syslog-ng
-          command: service syslog-ng start
+          command: sudo service syslog-ng start
 
       - run:
           name: Configure prerequisites
@@ -23,4 +23,4 @@ jobs:
 
       - run:
           name: Run dark-lie
-          command: bash dark-lie
+          command: chmod +x dark-lie && ./dark-lie
