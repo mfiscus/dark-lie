@@ -23,7 +23,7 @@
 
 1. Check out a clone of this repo to your local bin directory
    ```bash
-   git clone https://github.com/mfiscus/dark-lie.git ~/bin
+   cd ~/bin && wget https://raw.githubusercontent.com/mfiscus/dark-lie/master/dark-lie
    ```
 2. Run `~/bin/dark-lie`
 
