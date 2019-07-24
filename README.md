@@ -25,7 +25,12 @@
    ```bash
    cd ~/bin && wget https://raw.githubusercontent.com/mfiscus/dark-lie/master/dark-lie
    ```
-2. Run `~/bin/dark-lie`
+2. Make script executable
+   ```bash
+   chmod +x dark-lie
+   ```
+
+3. Run `./dark-lie`
 
 ## Optional
 
