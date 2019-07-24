@@ -170,7 +170,7 @@ readonly -a dependancies=( 'awk' 'jq' 'logger' )
 declare -i dependancy=0
 
 while [ "${dependancy}" -lt "${#dependancies[@]}" ]; do
-    __check_dependancy ${dependancies[${dependancy}]} || __throw_error ${dependancy}" required" ${?}
+    __check_dependancy ${dependancies[${dependancy}]} || __throw_error ${dependancies[${dependancy}]}" required" ${?}
 
     (( ++dependancy ))
 
