@@ -21,7 +21,7 @@
 
 ## Installation
 
-1. Check out a clone of this repo to your local bin directory
+1. Download dark-lie to your local bin directory
    ```bash
    cd ~/bin && wget https://raw.githubusercontent.com/mfiscus/dark-lie/master/dark-lie
    ```
