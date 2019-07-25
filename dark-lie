@@ -95,6 +95,7 @@ function __validate_api_connectivity() {
     
 }
 
+
 function __get_location() {
     # query location api for gps coordinates
     local coordinates=$( curl -sH "Authorization: Bearer "${ip_auth_token} ${ip_api_uri}/loc )
@@ -102,6 +103,7 @@ function __get_location() {
     echo ${coordinates}
 
 }
+
 
 function __get_city() {
     # query location api for gps coordinates
@@ -139,14 +141,14 @@ function __get_temperature() {
 }
 
 
-# check for dependancies
-# ${1} = dependancy
-function __check_dependancy() {
+# check for dependencies
+# ${1} = dependency
+function __check_dependency() {
     if [ ${#} -eq 1 ]; then
-        local dependancy=${1}
+        local dependency=${1}
         local exit_code=${null:-}
 
-        type ${dependancy} &>/dev/null; exit_code=${?}
+        type ${dependency} &>/dev/null; exit_code=${?}
         
         if [ ${exit_code} -ne 0 ]; then
             return 255
@@ -165,18 +167,18 @@ function __check_dependancy() {
 ### main program ###
 ####################
 
-# validate dependancies
-readonly -a dependancies=( 'awk' 'jq' 'logger' )
-declare -i dependancy=0
+# validate dependencies
+readonly -a dependencies=( 'awk' 'jq' 'logger' )
+declare -i dependency=0
 
-while [ "${dependancy}" -lt "${#dependancies[@]}" ]; do
-    __check_dependancy ${dependancies[${dependancy}]} || __throw_error ${dependancies[${dependancy}]}" required" ${?}
+while [ "${dependency}" -lt "${#dependencies[@]}" ]; do
+    __check_dependency ${dependencies[${dependency}]} || __throw_error ${dependencies[${dependency}]}" required" ${?}
 
-    (( ++dependancy ))
+    (( ++dependency ))
 
 done
 
-unset dependancy
+unset dependency
 
 # make sure we're using least bash 4 for proper support of associative arrays
 [ $( echo ${BASH_VERSION} | grep -o '^[0-9]' ) -ge 4 ] || __throw_error "Please upgrade to at least bash version 4" ${?}
