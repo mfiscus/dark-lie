@@ -19,7 +19,7 @@ jobs:
 
       - run:
           name: Execute cis-docker-benchmark
-          command: inspec exec https://github.com/dev-sec/cis-docker-benchmark.git --chef-license accept
+          command: inspec exec https://github.com/dev-sec/cis-docker-benchmark.git --chef-license accept --attrs sample_attributes.yml
 
       - run:
           name: Start syslog-ng
