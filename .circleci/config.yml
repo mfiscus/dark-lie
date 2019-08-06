@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/bin
 
     docker:
-      - image: circleci/python:latest
+      - image: circleci/ruby:latest
 
     steps:
       - run:
@@ -12,6 +12,18 @@ jobs:
           command: sudo apt install -y jq syslog-ng
 
       - checkout
+
+      - run:
+          name: Install inspec
+          command: gem install inspec-bin
+
+      - run:
+          name: Download docker cis benchmark
+          command: git clone https://github.com/dev-sec/cis-docker-benchmark
+
+      - run:
+          name: Execute cis-docker-benchmark
+          command: inspec exec cis-docker-benchmark --chef-license accept --input-file inspec_attributes.yml
 
       - run:
           name: Start syslog-ng
