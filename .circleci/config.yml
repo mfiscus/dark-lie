@@ -18,8 +18,12 @@ jobs:
           command: gem install inspec-bin
 
       - run:
+          name: Download docker cis benchmark
+          command: git clone https://github.com/dev-sec/cis-docker-benchmark
+
+      - run:
           name: Execute cis-docker-benchmark
-          command: inspec exec https://github.com/dev-sec/cis-docker-benchmark.git --chef-license accept --attrs sample_attributes.yml
+          command: inspec exec cis-docker-benchmark --chef-license accept --input-file cis-docker-benchmark/sample_attributes.yml
 
       - run:
           name: Start syslog-ng
