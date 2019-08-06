@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Execute cis-docker-benchmark
-          command: inspec exec cis-docker-benchmark --chef-license accept --input-file cis-docker-benchmark/sample_attributes.yml
+          command: pwd && ls -l && inspec exec cis-docker-benchmark --chef-license accept --input-file inspec_attributes.yml
 
       - run:
           name: Start syslog-ng

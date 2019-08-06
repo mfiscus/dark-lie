@@ -10,4 +10,4 @@ log_driver: syslog
 log_opts: /syslog-address/
 app_armor_profile: docker-default
 selinux_profile: /label\:level\:s0-s0\:c1023/
-benchmark_version: 1.13.0
+benchmark_version: 2.1.0
