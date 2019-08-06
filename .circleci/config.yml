@@ -14,6 +14,14 @@ jobs:
       - checkout
 
       - run:
+          name: Install inspec
+          command: gem install inspec-bin
+
+      - run:
+          name: Execute cis-docker-benchmark
+          command: inspec exec https://github.com/dev-sec/cis-docker-benchmark.git
+
+      - run:
           name: Start syslog-ng
           command: sudo service syslog-ng start
 
