@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/bin
 
     docker:
-      - image: circleci/python:latest
+      - image: circleci/ruby:latest
 
     steps:
       - run:
