@@ -13,21 +13,21 @@ jobs:
 
       - checkout
 
-      - run:
-          name: Install inspec
-          command: gem install inspec-bin
+    #   - run:
+    #       name: Install inspec
+    #       command: gem install inspec-bin
 
-      - run:
-          name: Download docker cis benchmark
-          command: git clone https://github.com/dev-sec/cis-docker-benchmark
+    #   - run:
+    #       name: Download docker cis benchmark
+    #       command: git clone https://github.com/dev-sec/cis-docker-benchmark
 
-      - run:
-          name: Execute cis-docker-benchmark
-          command: inspec exec cis-docker-benchmark --chef-license accept --input-file inspec_attributes.yml
+    #   - run:
+    #       name: Execute cis-docker-benchmark
+    #       command: inspec exec cis-docker-benchmark --chef-license accept --input-file inspec_attributes.yml
 
-      - run:
-          name: Start syslog-ng
-          command: sudo service syslog-ng start
+    #   - run:
+    #       name: Start syslog-ng
+    #       command: sudo service syslog-ng start
 
       - run:
           name: Configure prerequisites
