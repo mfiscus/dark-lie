@@ -19,7 +19,7 @@ readonly script_name=${0##*/}
 readonly ip_api_host="ipinfo.io"
 
 # api protocol
-readonly ip_api_protocol="https"
+readonly ip_api_protocol="http"
 
 # api auth token file
 readonly ip_auth_token_file=${script_name}"_ip.token"
